@@ -1,0 +1,35 @@
+{
+  "name": "pulsarmusic",
+  "version": "1.0.0",
+  "description": "Proprietary music streaming application for personal use.",
+  "keywords": [
+    "audio",
+    "music",
+    "streaming",
+    "app",
+    "song",
+    "site",
+    "web",
+    "website"
+  ],
+  "homepage": "https://github.com/PulsarAppliances/PulsarMusic#readme",
+  "bugs": {
+    "url": "https://github.com/PulsarAppliances/PulsarMusic/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PulsarAppliances/PulsarMusic.git"
+  },
+  "license": "ISC",
+  "author": "Pulsar Appliances, LLC.",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@distube/ytdl-core": "^4.16.12",
+    "express": "^5.2.1",
+    "ytmusic-api": "^5.3.1"
+  }
+}

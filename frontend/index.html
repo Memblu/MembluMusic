@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memblu Music</title>
+
+  <style>
+    :root {
+      --bg: #09090b;
+      --card: #18181b;
+      --card-hover: #27272a;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --accent: #ffffff;
+      --radius: 18px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 120px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Header */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      backdrop-filter: blur(20px);
+
+      background: rgba(9, 9, 11, 0.75);
+
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    .search {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search input {
+      flex: 1;
+
+      background: var(--card);
+
+      color: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 14px;
+
+      padding: 14px;
+
+      outline: none;
+
+      font-size: 15px;
+    }
+
+    .search input:focus {
+      border-color: #3f3f46;
+    }
+
+    .search button {
+      background: white;
+      color: black;
+
+      border: none;
+
+      border-radius: 14px;
+
+      padding: 0 18px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+    }
+
+    /* Hero */
+
+    .hero {
+      margin-top: 24px;
+      margin-bottom: 20px;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin: 28px 0 14px;
+    }
+
+    .section-heading h3 {
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .eyebrow {
+      color: #f59e0b;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .library {
+      margin-bottom: 12px;
+    }
+
+    .library-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .library-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .library-item .song-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #0f0f11;
+    }
+
+    .library-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .library-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .library-item-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .library-item-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .song-actions button.secondary,
+    .library-item-actions button,
+    .library-item-actions a {
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      background: #27272a;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .song-actions button.secondary {
+      background: #3f3f46;
+      color: white;
+    }
+
+    .song-actions button:disabled,
+    .library-item-actions button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Results */
+
+    #results {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .song {
+      background: var(--card);
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius);
+
+      padding: 12px;
+
+      display: flex;
+
+      gap: 12px;
+
+      transition: 0.15s ease;
+    }
+
+    .song:hover {
+      background: var(--card-hover);
+    }
+
+    .song img {
+      width: 70px;
+      height: 70px;
+      border-radius: 14px;
+      object-fit: cover;
+    }
+
+    .song-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .song-title {
+      font-weight: 600;
+      font-size: 15px;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .song-artist {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .song-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .song-actions button,
+    .song-actions a {
+      border: none;
+
+      text-decoration: none;
+
+      cursor: pointer;
+
+      background: #27272a;
+
+      color: white;
+
+      padding: 8px 12px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+    }
+
+    .song-actions button.primary {
+      background: white;
+      color: black;
+    }
+
+    /* Loading */
+
+    .loading {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px;
+    }
+
+    /* Player */
+
+    .player {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom));
+
+      background: rgba(24, 24, 27, 0.9);
+
+      backdrop-filter: blur(20px);
+
+      border: 1px solid rgba(255, 255, 255, 0.08);
+
+      border-radius: 22px;
+
+      padding: 14px;
+
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 10px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .now-playing {
+      margin-bottom: 10px;
+    }
+
+    .now-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .now-title {
+      font-size: 14px;
+      font-weight: 600;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    audio {
+      width: 100%;
+    }
+
+    /* Empty State */
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 80px;
+    }
+
+    .empty h3 {
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .empty.compact {
+      margin-top: 0;
+      padding: 26px 16px;
+      border: 1px dashed rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      background: rgba(24, 24, 27, 0.45);
+    }
+
+    @media (max-width: 560px) {
+      .section-heading,
+      .library-item {
+        align-items: flex-start;
+      }
+
+      .section-heading,
+      .library-item,
+      .song {
+        flex-direction: column;
+      }
+
+      .library-item-actions,
+      .song-actions {
+        width: 100%;
+      }
+
+      .library-item-actions button,
+      .library-item-actions a,
+      .song-actions button,
+      .song-actions a {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <div class="logo">
+        Memblu Music
+      </div>
+
+      <div class="search">
+        <input id="searchInput" placeholder="Search for songs..." autocomplete="off">
+
+        <button onclick="searchSongs()">
+          Search
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <h2>
+        Your music,<br>
+        instantly.
+      </h2>
+
+      <p>
+        Search millions of tracks and start listening.
+      </p>
+    </section>
+
+    <section class="library">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Offline library</div>
+          <h3>Saved on this device</h3>
+        </div>
+
+        <p id="downloadsMeta">No downloads yet.</p>
+      </div>
+
+      <div id="downloads" class="library-list">
+        <div class="empty compact">
+          <h3>No downloads yet</h3>
+          <p>Save songs here to listen without a connection.</p>
+        </div>
+      </div>
+    </section>
+
+    <div id="results">
+
+      <div class="empty">
+        <h3>Search for something</h3>
+        <p>Your results will appear here.</p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <div class="player">
+
+    <div class="now-playing">
+
+      <div class="now-label">
+        NOW PLAYING
+      </div>
+
+      <div class="now-title" id="nowPlaying">
+        Nothing playing
+      </div>
+
+    </div>
+
+    <audio id="player" controls></audio>
+
+  </div>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(function () {});
+    }
+
+    var API_BASE = "https://memblu.us.to/music";
+    var DB_NAME = "PulsarMusic";
+    var DB_VERSION = 1;
+    var SONG_STORE = "songs";
+
+    var resultsEl = document.getElementById("results");
+    var downloadsEl = document.getElementById("downloads");
+    var downloadsMetaEl = document.getElementById("downloadsMeta");
+    var player = document.getElementById("player");
+    var nowPlaying = document.getElementById("nowPlaying");
+    var currentResults = [];
+    var downloadedSongs = [];
+    var downloadedSongsById = {};
+    var currentObjectUrl = null;
+
+    function openDB() {
+      if (!("indexedDB" in window)) {
+        alert("This browser does not support IndexedDB, which is required for essential Memblu Music features. Your experience will be severly impacted. Please use a modern browser that supports IndexedDB, such as Chrome, Firefox, Edge, or Safari.");
+        return Promise.reject(new Error("IndexedDB is not supported"));
+      }
+
+      return new Promise((resolve, reject) => {
+
+        var request = indexedDB.open(DB_NAME, DB_VERSION);
+
+        request.onupgradeneeded =
+          function (event) {
+
+            var db = event.target.result;
+
+            if (!db.objectStoreNames.contains(SONG_STORE)) {
+              db.createObjectStore(SONG_STORE, {
+                keyPath: "id"
+              });
+            }
+          };
+
+        request.onsuccess =
+          function () {
+            resolve(request.result);
+          };
+
+        request.onerror =
+          function () {
+            reject(request.error);
+          };
+      });
+    }
+
+    function withStore(mode, handler) {
+      return openDB().then(function (db) {
+        return new Promise(function (resolve, reject) {
+          var tx = db.transaction(SONG_STORE, mode);
+          var store = tx.objectStore(SONG_STORE);
+          var result;
+
+          tx.oncomplete = function () {
+            db.close();
+            resolve(result);
+          };
+
+          tx.onerror = function () {
+            db.close();
+            reject(tx.error);
+          };
+
+          tx.onabort = function () {
+            db.close();
+            reject(tx.error);
+          };
+
+          try {
+            result = handler(store, tx);
+          } catch (err) {
+            db.close();
+            reject(err);
+          }
+        });
+      });
+    }
+
+    function saveSong(song) {
+      return withStore("readwrite", function (store) {
+        return store.put(song);
+      });
+    }
+
+    function removeSong(songId) {
+      return withStore("readwrite", function (store) {
+        return store.delete(songId);
+      });
+    }
+
+    function getSong(songId) {
+      return withStore("readonly", function (store) {
+        return new Promise(function (resolve, reject) {
+          var request = store.get(songId);
+
+          request.onsuccess = function () {
+            resolve(request.result || null);
+          };
+
+          request.onerror = function () {
+            reject(request.error);
+          };
+        });
+      });
+    }
+
+    function getAllSongs() {
+      return withStore("readonly", function (store) {
+        return new Promise(function (resolve, reject) {
+          var request = store.getAll();
+
+          request.onsuccess = function () {
+            resolve(request.result || []);
+          };
+
+          request.onerror = function () {
+            reject(request.error);
+          };
+        });
+      });
+    }
+
+    function clearObjectUrl() {
+      if (currentObjectUrl) {
+        URL.revokeObjectURL(currentObjectUrl);
+        currentObjectUrl = null;
+      }
+    }
+
+    function getArtistLabel(song) {
+      if (!song.artists || !song.artists.length) {
+        return "Unknown Artist";
+      }
+
+      return song.artists.join(", ");
+    }
+
+    function isDownloaded(songId) {
+      return !!downloadedSongsById[songId];
+    }
+
+    function getPlayableUrl(song) {
+      var source = song;
+
+      if (source.audioData) {
+        var blobType = source.audioType || "audio/mp4";
+        var blobData = source.audioData instanceof Blob
+          ? source.audioData
+          : new Blob([source.audioData], { type: blobType });
+
+        currentObjectUrl = URL.createObjectURL(blobData);
+        return currentObjectUrl;
+      }
+
+      if (source.audio instanceof Blob) {
+        currentObjectUrl = URL.createObjectURL(source.audio);
+        return currentObjectUrl;
+      }
+
+      return null;
+    }
+
+    function updateNowPlaying(song, label) {
+      nowPlaying.textContent =
+        song.title + " • " + getArtistLabel(song) + (label ? " • " + label : "");
+    }
+
+    function setPlayerUrl(url) {
+      clearObjectUrl();
+      player.src = url;
+    }
+
+    function playStoredSong(song, label) {
+      var playableUrl = getPlayableUrl(song);
+
+      if (!playableUrl) {
+        return false;
+      }
+
+      setPlayerUrl(playableUrl);
+      player.play().catch(function () {});
+      updateNowPlaying(song, label || "Downloaded");
+      return true;
+    }
+
+    function playSong(song) {
+      if (isDownloaded(song.id)) {
+        playStoredSong(downloadedSongsById[song.id], "Downloaded");
+        return;
+      }
+
+      setPlayerUrl(API_BASE + "/stream/" + song.id);
+      player.play().catch(function () {});
+      updateNowPlaying(song, "Streaming");
+    }
+
+    function renderDownloads() {
+      var count = downloadedSongs.length;
+
+      downloadsMetaEl.textContent =
+        count ? count + (count === 1 ? " song saved" : " songs saved") : "No downloads yet.";
+
+      if (!count) {
+        downloadsEl.innerHTML =
+          '<div class="empty compact"><h3>No downloads yet</h3><p>Save songs here to listen without a connection.</p></div>';
+        return;
+      }
+
+      downloadsEl.innerHTML = "";
+
+      for (var i = 0; i < downloadedSongs.length; i += 1) {
+        var song = downloadedSongs[i];
+        var item = document.createElement("div");
+
+        item.className = "library-item";
+        item.innerHTML =
+          '<img class="song-thumb" src="' + (song.thumbnail || "") + '" alt="">' +
+          '<div class="library-item-content">' +
+            '<div class="library-item-title">' + song.title + '</div>' +
+            '<div class="library-item-subtitle">' + getArtistLabel(song) + '</div>' +
+          '</div>' +
+          '<div class="library-item-actions">' +
+            '<button data-play-offline>Play</button>' +
+            '<button data-remove-download>Remove</button>' +
+          '</div>';
+
+        item.querySelector("[data-play-offline]")
+          .addEventListener("click", (function (savedSong) {
+            return function () {
+              playStoredSong(savedSong, "Downloaded");
+            };
+          }(song)));
+
+        item.querySelector("[data-remove-download]")
+          .addEventListener("click", (function (savedSong) {
+            return function () {
+              removeSong(savedSong.id)
+                .then(refreshDownloadedSongs)
+                .then(function () {
+                  renderResults(currentResults);
+                })
+                .catch(function (err) {
+                  console.error(err);
+                });
+            };
+          }(song)));
+
+        downloadsEl.appendChild(item);
+      }
+    }
+
+    function refreshDownloadedSongs() {
+      return getAllSongs().then(function (songs) {
+        downloadedSongs = songs;
+        downloadedSongsById = {};
+
+        for (var i = 0; i < songs.length; i += 1) {
+          downloadedSongsById[songs[i].id] = songs[i];
+        }
+
+        renderDownloads();
+      }).catch(function (err) {
+        console.error(err);
+
+        downloadsMetaEl.textContent = "Offline library unavailable.";
+        downloadsEl.innerHTML =
+          '<div class="empty compact"><h3>Offline library unavailable</h3><p>This browser could not access local storage.</p></div>';
+      });
+    }
+
+    function downloadSong(song, button) {
+      var originalText = button ? button.textContent : "";
+
+      if (button) {
+        button.disabled = true;
+        button.textContent = "Saving...";
+      }
+
+      return fetch(API_BASE + "/download/" + song.id)
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Download failed");
+          }
+
+          return Promise.all([
+            response.arrayBuffer(),
+            Promise.resolve(response.headers.get("content-type") || "audio/mp4")
+          ]);
+        })
+        .then(function (data) {
+          return saveSong({
+            id: song.id,
+            title: song.title,
+            artists: song.artists || [],
+            album: song.album || "Single",
+            durationSeconds: song.durationSeconds || 0,
+            thumbnail: song.thumbnail || "",
+            audioData: data[0],
+            audioType: data[1],
+            downloadedAt: Date.now()
+          });
+        })
+        .then(function () {
+          return refreshDownloadedSongs();
+        })
+        .then(function () {
+          renderResults(currentResults);
+        })
+        .catch(function (err) {
+          console.error(err);
+
+          if (button) {
+            button.textContent = originalText || "Download";
+          }
+        })
+        .finally(function () {
+          if (button) {
+            button.disabled = false;
+            if (button.textContent === "Saving...") {
+              button.textContent = originalText || "Download";
+            }
+          }
+        });
+    }
+
+    function renderResults(results) {
+      currentResults = results.slice();
+
+      if (!results.length) {
+        resultsEl.innerHTML =
+          '<div class="empty"><h3>No results</h3><p>Try another search.</p></div>';
+
+        return;
+      }
+
+      resultsEl.innerHTML = "";
+
+      for (var i = 0; i < results.length; i += 1) {
+        (function (song) {
+          var card = document.createElement("div");
+          var saved = isDownloaded(song.id);
+
+          card.className = "song";
+          card.innerHTML =
+            '<img src="' + (song.thumbnail || "") + '" alt="">' +
+            '<div class="song-content">' +
+              '<div class="song-title">' + song.title + '</div>' +
+              '<div class="song-artist">' + getArtistLabel(song) + '</div>' +
+              '<div class="song-actions">' +
+                '<button class="primary" data-play>Play</button>' +
+                '<button class="secondary" data-download>' + (saved ? 'Saved' : 'Download') + '</button>' +
+                '<a href="' + API_BASE + '/stream/' + song.id + '" target="_blank" rel="noopener">Open</a>' +
+              '</div>' +
+            '</div>';
+
+          card.querySelector("[data-play]")
+            .addEventListener("click", function () {
+              playSong(song);
+            });
+
+          card.querySelector("[data-download]")
+            .addEventListener("click", function (event) {
+              if (saved) {
+                removeSong(song.id)
+                  .then(refreshDownloadedSongs)
+                  .then(function () {
+                    renderResults(currentResults);
+                  })
+                  .catch(function (err) {
+                    console.error(err);
+                  });
+
+                return;
+              }
+
+              downloadSong(song, event.target);
+            });
+
+          resultsEl.appendChild(card);
+        }(results[i]));
+      }
+    }
+
+    function searchSongs() {
+      var query = document.getElementById("searchInput").value.trim();
+
+      if (!query) {
+        return;
+      }
+
+      resultsEl.innerHTML =
+        '<div class="loading">Searching...</div>';
+
+      fetch(API_BASE + "/search?q=" + encodeURIComponent(query))
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          renderResults(data.results || []);
+        })
+        .catch(function (err) {
+          console.error(err);
+
+          resultsEl.innerHTML =
+            '<div class="loading">Search failed.</div>';
+        });
+    }
+
+    document.getElementById("searchInput")
+      .addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          searchSongs();
+        }
+      });
+
+    refreshDownloadedSongs();
+  </script>
+
+</body>
+
+</html>
