@@ -1,6 +1,6 @@
 # Memblu Music
 > [!NOTE]
-> Memblu Music should either be hosted from a residential IP OR should have requests routed to a residential proxy or exit node. [Why?](https://github.com/Memblu/MembluMusic#why)
+> Memblu Music should either be hosted from a residential IP OR should have requests routed to a residential proxy or exit node. [Why?](https://github.com/Memblu/MembluMusic/edit/main/README.md#why-does-it-need-to-be-on-a-residential-ip-address)
 
 Millions of songs, instantly. Online, offline.
 
@@ -9,4 +9,7 @@ Millions of songs, instantly. Online, offline.
 - An internet connection
 - A residential proxy or exit node.
 
-TBD .... FINISH README
+### Why does it need to be on a residential IP address?
+Memblu Music pulls music by streaming it from YouTube Music's content CDN, and for this to work reliably, you need to either be using a residential IP address or routing Memblu Music's outbound traffic through a residential proxy or exit node.
+
+Alternatively, you can create a file called cookies.txt (must use the Netscape cookies format). There are several extensions for most major browsers that can help you export such a file.
