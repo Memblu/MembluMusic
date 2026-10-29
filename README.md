@@ -1,6 +1,6 @@
 # Memblu Music
 > [!NOTE]
-> Memblu Music should either be hosted from a residential public IP OR with requests routed to a residential proxy/exit node. [Why?](https://github.com/Memblu/MembluMusic#why)
+> Memblu Music should either be hosted from a residential IP OR should have requests routed to a residential proxy or exit node. [Why?](https://github.com/Memblu/MembluMusic#why)
 
 Millions of songs, instantly. Online, offline.
 
