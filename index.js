@@ -15,9 +15,9 @@ const HAS_COOKIES = fs.existsSync(COOKIE_FILE);
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 if (HAS_COOKIES) {
-  console.log('🔒 Using cookies.txt');
+  console.log('[SERVER] Using cookies.txt');
 } else {
-  console.log('⚠️ No cookies.txt found');
+  console.log('[SERVER] No cookies.txt found');
 }
 
 function runYtDlp(args) {
@@ -126,7 +126,7 @@ function streamDownload(videoId, res) {
 
     app.listen(PORT, () => {
       console.log(
-        `🚀 Listening on http://localhost:${PORT}`
+        `[SERVER] Listening on http://localhost:${PORT}`
       );
     });
   } catch (err) {
