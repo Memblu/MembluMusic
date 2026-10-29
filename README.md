@@ -2,6 +2,8 @@
 > [!NOTE]
 > Memblu Music should either be hosted from a residential IP OR should have outbound traffic routed through a residential proxy, VPN, or exit node. [Why?](https://github.com/Memblu/MembluMusic/edit/main/README.md#why-does-it-need-to-be-on-a-residential-ip-address)
 
+Memblu Music is a free-forever, self-hosted ad-free music streaming platform with offline song downloads and local playlists.
+
 Millions of songs, instantly. Online, offline.
 
 ## Requirements
